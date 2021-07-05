@@ -25,7 +25,8 @@ class PostRequest extends FormRequest
     {
         return [
             'title' => 'required|max:255',
-            'content' => 'required|min:5'
+            'content' => 'required|min:5',
+            'category_id' => 'nullable|exists:categories,id',
         ];
     }
 
@@ -38,7 +39,8 @@ class PostRequest extends FormRequest
             'title.required' => 'Il campo Titole è obbligatorio',
             'title.max' => 'Il campo Titolo deve essere massimo :max caratteri',
             'content.required' => 'Il campo Content è obbligatorio',
-            'content.min' => 'Il campo Content deve essere minimo :minimo caratteri'
+            'content.min' => 'Il campo Content deve essere minimo :minimo caratteri',
+            'category_id.exists' => 'Inserisci una categoria valida',
         ];
 
     }
