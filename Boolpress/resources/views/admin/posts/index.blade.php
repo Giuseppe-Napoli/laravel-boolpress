@@ -15,6 +15,7 @@
                 <th>ID</th>
                 <th>Title</th>
                 <th>Category</th>
+                <th>Tag</th>
                 <th colspan="3">Actions</th>
             </tr>
         </thead>
@@ -29,6 +30,13 @@
                         @else
                             -
                         @endif
+                    </td>
+                    <td>
+                        @forelse ( $post->tags as $tag )
+                          <span class="badge bg-warning">{{$tag->name}}</span>
+                        @empty
+                            - 
+                        @endforelse
                     </td>
                     
                     <td>

@@ -27,6 +27,7 @@ class PostRequest extends FormRequest
             'title' => 'required|max:255',
             'content' => 'required|min:5',
             'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|exists:categories,id',
         ];
     }
 
@@ -41,6 +42,7 @@ class PostRequest extends FormRequest
             'content.required' => 'Il campo Content è obbligatorio',
             'content.min' => 'Il campo Content deve essere minimo :minimo caratteri',
             'category_id.exists' => 'Inserisci una categoria valida',
+            'tags.exists' => 'Inserisci una tag valido',
         ];
 
     }

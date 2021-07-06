@@ -16,4 +16,8 @@ class Post extends Model
     public function category(){
         return $this->belongsTo('App\Category'); //cosi stiamo dicendo che il post appartiene alle category
     }
+
+    public function tags(){ //tags al plurale perche è una relazione molti a molti quindi useremo tags e posts
+        return $this->belongsToMany('App\Tag');
+    }
 }
