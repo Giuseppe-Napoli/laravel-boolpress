@@ -13,9 +13,9 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 10; $i++) { 
+        for ($i=1; $i <=10; $i++) { 
             $new_post = new Post;
-            $new_post -> title = 'Titolo Post';
+            $new_post -> title = 'Titolo Post '. $i;
             $new_post -> slug = Str:: slug ($new_post -> title, '-'); 
             $new_post -> content = ($i + 1) . 'BlkonpiblaBlaBlablaBlaBsdsdsdsdlblablablaaBlablaBlaBlkonpiBlaBlabla';
             $new_post -> save();

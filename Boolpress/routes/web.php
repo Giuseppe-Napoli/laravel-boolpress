@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'PageController@index');
+//Route::get('/', 'PageController@index');
 
 Auth::routes();
 
@@ -28,3 +28,10 @@ Route::prefix('admin')
     Route::get('/','HomeController@index')->name('home');
     Route::resource('/posts', 'PostController');
     });
+
+
+Route::get('{any?}', function(){
+
+    return view('guest.welcome');
+
+  })->where('any','.*');
