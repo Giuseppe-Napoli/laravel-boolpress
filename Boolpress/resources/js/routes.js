@@ -7,6 +7,7 @@ import Home from './pages/Home.vue';
 import About from './pages/About.vue';
 import Blog from './pages/Blog.vue';
 import Contatti from './pages/Contatti.vue';
+import PostDet from './pages/PostDet.vue';
 import Error404 from './pages/Error404.vue';
 
 //creiamo la classe route con la stessa sintassi della creazione di #app
@@ -36,7 +37,13 @@ const router = new VueRouter({
             component: Contatti
         },
         {
+            path: '/postdet/:slug', //con i due punti si aspetta un parametro che passo nel Card.vue con 'params:{slug}'
+            name: 'postdet',
+            component: PostDet
+        },
+        {
             path: '/*',
+            name:'error',
             component: Error404
         },
     ]

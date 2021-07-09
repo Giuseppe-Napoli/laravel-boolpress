@@ -75,7 +75,7 @@ class PostController extends Controller
             ];
             return response()->json($data);
         }else{
-            return response()->json(['success' =>false]);
+            return response()->json(['success' => false]);
 
         }
 

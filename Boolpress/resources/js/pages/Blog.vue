@@ -11,7 +11,7 @@
 
             <Card
                 v-for="post in posts"
-                :key="'key'+ post.id"
+                :key="'t'+ post.id"
                 :title="post.title"
                 :date="post.date"
                 :category="post.category"
@@ -37,7 +37,7 @@
 
                 <li class="page-item"
                 v-for="p in pagination.last"
-                :key="'page'+ p.id"
+                :key="'page'+ p"
                 >
                     <button class="page-link" 
                     @click="getPosts(p)"
