@@ -1,18 +1,58 @@
 <template>
+    
   <div>
-      <h1>Blog</h1>
-      
-      <div class="card mb-4"
-      v-for="post in posts"
-      :key="'k'+ post.id"
-      >
-        <div class="card-body">
-            <h5 class="card-title">{{post.title}}</h5>
-            <span>{{formatDate(post.date)}}</span>
-            <span class="badge bg-warning text-dark float-right">{{post.category}}</span>
-            <p class="card-text">{{post.content}}</p>
-            <a href="#" class="btn btn-primary">Go</a>
+        <h1>Blog</h1>
+        <div v-if="!loaded" class="text-center mt-5">
+            <Loading/>
         </div>
+        
+        
+        <div v-else>
+
+            <Card
+                v-for="post in posts"
+                :key="'key'+ post.id"
+                :title="post.title"
+                :date="post.date"
+                :category="post.category"
+                :content="post.content"
+                :slug="post.slug"
+                />
+
+        </div>
+
+
+
+    <div class="d-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <button 
+                    class="page-link" 
+                    @click="getPosts(pagination.current - 1)"
+                     v-if="pagination.current > 1">
+                        <span aria-hidden="true">&laquo;</span>
+                    </button>
+                </li>
+
+                <li class="page-item"
+                v-for="p in pagination.last"
+                :key="'page'+ p.id"
+                >
+                    <button class="page-link" 
+                    @click="getPosts(p)"
+                    >{{p}}</button>
+                </li>
+              
+                <li class="page-item">
+                    <button class="page-link" 
+                    @click="getPosts(pagination.current + 1)"
+                    v-if="pagination.current < pagination.last ">
+                        <span aria-hidden="true">&raquo;</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
     </div>
     
   </div>
@@ -23,37 +63,53 @@
 
 <script>
 import axios from 'axios';
+import Loading from '../components/Loading.vue';
+import Card from '../components/Card.vue';
+
 export default {
     name: 'Blog',
+
+    components:{
+        Loading,
+        Card,
+    },
+
     data(){
         return{
-            posts:[]
+            posts:[],
+            pagination:{},
+            loaded:false,
+
+            
+            
     
         }
     },
 
     methods:{
-        getPosts(){
-            axios.get('http://127.0.0.1:8000/api/posts')
+        getPosts(page = 1){
+
+            this.loaded = false;
+
+            axios.get('http://127.0.0.1:8000/api/posts',{
+                params:{
+                    page:page,
+                }
+            })
                 .then(res => {
                     this.posts = res.data.data
+                    this.pagination = {
+                        current: res.data.current_page,
+                        last: res.data.last_page
+                    }
+                    this.loaded = true;
                 })
                 .catch(err => { 
                     console.log(err);
                 })
         },
 
-        formatDate(date){
-            let d = new Date(date);
-            let day = d.getDate();
-            let m = d.getMonth() + 1;
-            let y = d.getFullYear();
-
-            if(day < 10) day = '0' + day;
-            if(m < 10) m = '0' + m;
-
-            return `${day}/${m}/${y}`;
-        }
+       
     },
 
     created(){
